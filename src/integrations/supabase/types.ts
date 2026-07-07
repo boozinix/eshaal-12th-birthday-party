@@ -14,7 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      rsvps: {
+        Row: {
+          allergies: string | null
+          attending: boolean
+          child_age: number | null
+          child_name: string
+          created_at: string
+          id: string
+          message: string | null
+          parent_name: string
+          parent_phone: string
+          sleepover: boolean
+        }
+        Insert: {
+          allergies?: string | null
+          attending: boolean
+          child_age?: number | null
+          child_name: string
+          created_at?: string
+          id?: string
+          message?: string | null
+          parent_name: string
+          parent_phone: string
+          sleepover?: boolean
+        }
+        Update: {
+          allergies?: string | null
+          attending?: boolean
+          child_age?: number | null
+          child_name?: string
+          created_at?: string
+          id?: string
+          message?: string | null
+          parent_name?: string
+          parent_phone?: string
+          sleepover?: boolean
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
