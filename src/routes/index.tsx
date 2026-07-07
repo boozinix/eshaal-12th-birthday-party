@@ -56,7 +56,7 @@ function Index() {
       allergies: parsed.data.allergies ?? null,
       message: parsed.data.message ?? null,
     };
-    const { error } = await supabase.from("rsvps").insert(payload as never);
+    const { error } = await supabase.from("rsvps").insert(payload);
     setSubmitting(false);
     if (error) {
       toast.error("Couldn't send RSVP. Please try again.");
