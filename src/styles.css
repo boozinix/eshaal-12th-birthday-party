@@ -30,45 +30,55 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-sun: var(--sun);
-  --color-pool: var(--pool);
-  --color-pool-deep: var(--pool-deep);
-  --color-coral: var(--coral);
-  --color-cream: var(--cream);
-  --color-navy: var(--navy);
-  --font-display: "Fredoka", system-ui, sans-serif;
+
+  --color-hot-pink: var(--hot-pink);
+  --color-blush: var(--blush);
+  --color-teal: var(--teal);
+  --color-purple-ink: var(--purple-ink);
+  --color-orange-crush: var(--orange-crush);
+  --color-sunny: var(--sunny);
+  --color-sky: var(--sky);
+  --color-ink: var(--ink);
+
+  --font-hero: "Sacramento", cursive;
   --font-script: "Caveat", cursive;
-  --font-body: "Nunito", system-ui, sans-serif;
+  --font-body: "Kalam", cursive;
+  --font-chunk: "Alfa Slab One", serif;
 }
 
 :root {
   --radius: 1rem;
-  --cream: oklch(0.97 0.03 95);
-  --sun: oklch(0.86 0.16 90);
-  --pool: oklch(0.72 0.13 220);
-  --pool-deep: oklch(0.55 0.13 225);
-  --coral: oklch(0.68 0.20 15);
-  --navy: oklch(0.28 0.06 250);
 
-  --background: var(--cream);
-  --foreground: var(--navy);
+  /* Watercolor palette matching the invite */
+  --paper: oklch(0.985 0.005 80);
+  --hot-pink: oklch(0.68 0.24 0);
+  --blush: oklch(0.88 0.08 350);
+  --teal: oklch(0.68 0.13 210);
+  --purple-ink: oklch(0.42 0.18 290);
+  --orange-crush: oklch(0.74 0.18 45);
+  --sunny: oklch(0.9 0.17 95);
+  --sky: oklch(0.82 0.12 230);
+  --ink: oklch(0.2 0.02 260);
+
+  --background: var(--paper);
+  --foreground: var(--ink);
   --card: oklch(1 0 0);
-  --card-foreground: var(--navy);
+  --card-foreground: var(--ink);
   --popover: oklch(1 0 0);
-  --popover-foreground: var(--navy);
-  --primary: var(--coral);
+  --popover-foreground: var(--ink);
+  --primary: var(--hot-pink);
   --primary-foreground: oklch(1 0 0);
-  --secondary: var(--pool);
+  --secondary: var(--teal);
   --secondary-foreground: oklch(1 0 0);
-  --muted: oklch(0.94 0.02 220);
-  --muted-foreground: oklch(0.45 0.05 250);
-  --accent: var(--sun);
-  --accent-foreground: var(--navy);
+  --muted: oklch(0.96 0.01 320);
+  --muted-foreground: oklch(0.45 0.03 260);
+  --accent: var(--sunny);
+  --accent-foreground: var(--ink);
   --destructive: oklch(0.58 0.22 27);
   --destructive-foreground: oklch(1 0 0);
-  --border: oklch(0.9 0.02 220);
-  --input: oklch(0.92 0.02 220);
-  --ring: var(--coral);
+  --border: oklch(0.9 0.02 320);
+  --input: oklch(0.96 0.01 320);
+  --ring: var(--hot-pink);
 }
 
 @layer base {
@@ -77,25 +87,83 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-body);
+    background-image:
+      radial-gradient(oklch(0.9 0.05 350 / 0.15) 1px, transparent 1px),
+      radial-gradient(oklch(0.85 0.08 210 / 0.12) 1px, transparent 1px);
+    background-size: 30px 30px, 55px 55px;
+    background-position: 0 0, 15px 20px;
   }
-  h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.01em; }
+  h1, h2, h3, h4 { font-family: var(--font-script); font-weight: 700; letter-spacing: -0.005em; }
 }
 
-@utility font-display { font-family: var(--font-display); }
+@utility font-hero { font-family: var(--font-hero); }
 @utility font-script { font-family: var(--font-script); }
+@utility font-body { font-family: var(--font-body); }
+@utility font-chunk { font-family: var(--font-chunk); }
 
-@keyframes float-slow {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-12px) rotate(3deg); }
+/* Watercolor brush stroke behind text */
+@utility brush-pink {
+  background: radial-gradient(ellipse at center, oklch(0.88 0.08 350 / 0.85) 0%, oklch(0.88 0.08 350 / 0.4) 60%, transparent 80%);
+  padding: 0.2em 0.6em;
+  border-radius: 40% 60% 55% 45% / 60% 40% 60% 40%;
 }
-@keyframes spin-slow {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+@utility brush-yellow {
+  background: radial-gradient(ellipse at center, oklch(0.9 0.17 95 / 0.9) 0%, oklch(0.9 0.17 95 / 0.5) 60%, transparent 80%);
+  padding: 0.35em 0.7em;
+  border-radius: 45% 55% 40% 60% / 55% 45% 60% 40%;
 }
-@keyframes wave {
+@utility brush-lavender {
+  background: radial-gradient(ellipse at center, oklch(0.85 0.08 290 / 0.85) 0%, oklch(0.85 0.08 290 / 0.4) 60%, transparent 80%);
+  padding: 0.4em 0.9em;
+  border-radius: 45% 55% 50% 50% / 60% 40% 55% 45%;
+}
+
+/* Animations */
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+@keyframes bob {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-14px) rotate(2deg); }
+}
+@keyframes sway {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-4deg); }
+  50% { transform: rotate(4deg); }
+}
+@keyframes drift {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(6px, -8px); }
+}
+@keyframes heart-pop {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50% { transform: scale(1.25); opacity: 1; }
+}
+@keyframes smoke {
+  0% { transform: translateY(0) scale(1); opacity: 0.7; }
+  100% { transform: translateY(-30px) scale(1.4); opacity: 0; }
+}
+@keyframes splash {
+  0%, 100% { transform: scale(1) rotate(0); opacity: 0.9; }
+  50% { transform: scale(1.15) rotate(6deg); opacity: 1; }
+}
+@keyframes wave-shift {
   0%, 100% { transform: translateX(0); }
-  50% { transform: translateX(-25px); }
+  50% { transform: translateX(-20px); }
 }
-@utility animate-float { animation: float-slow 5s ease-in-out infinite; }
-@utility animate-spin-slow { animation: spin-slow 25s linear infinite; }
-@utility animate-wave { animation: wave 6s ease-in-out infinite; }
+@keyframes rise {
+  0% { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@utility animate-spin-slow { animation: spin-slow 22s linear infinite; }
+@utility animate-bob { animation: bob 4.5s ease-in-out infinite; }
+@utility animate-sway { animation: sway 5s ease-in-out infinite; transform-origin: bottom center; }
+@utility animate-wiggle { animation: wiggle 3s ease-in-out infinite; }
+@utility animate-drift { animation: drift 6s ease-in-out infinite; }
+@utility animate-heart-pop { animation: heart-pop 2s ease-in-out infinite; }
+@utility animate-smoke { animation: smoke 3s ease-out infinite; }
+@utility animate-splash { animation: splash 2.4s ease-in-out infinite; }
+@utility animate-wave { animation: wave-shift 7s ease-in-out infinite; }
+@utility animate-rise { animation: rise 0.5s ease-out both; }
