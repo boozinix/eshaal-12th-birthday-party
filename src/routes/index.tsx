@@ -159,55 +159,14 @@ function Index() {
         </div>
 
         <div className="mx-auto mt-10 max-w-2xl px-6">
-          <div className="brush-yellow inline-block w-full text-center">
-            <p className="font-script text-2xl md:text-3xl" style={{ color: "var(--ink)" }}>
-              Please RSVP to <a href="tel:2179792912" className="font-bold underline decoration-2 underline-offset-4 hover:opacity-80" style={{ color: "var(--hot-pink)" }}>217·979·2912</a>
-            </p>
-          </div>
-        </div>
-
-        <div className="mx-auto mt-8 max-w-2xl px-6">
-          <button
-            type="button"
-            onClick={() => setSleepoverOpen((o) => !o)}
-            aria-expanded={sleepoverOpen}
-            className="brush-lavender block w-full text-center cursor-pointer"
-          >
+          <div className="brush-lavender inline-block w-full text-center">
             <p className="font-script text-2xl md:text-3xl" style={{ color: "var(--purple-ink)" }}>
               Optional Sleepover <Heart className="inline h-5 w-5" style={{ color: "var(--hot-pink)", fill: "var(--hot-pink)" }} />
             </p>
             <p className="font-script text-xl md:text-2xl" style={{ color: "var(--ink)" }}>
               for the girls who want to stay behind! <Heart className="inline h-4 w-4" style={{ color: "var(--purple-ink)", fill: "var(--purple-ink)" }} />
             </p>
-            <p className="mt-1 font-body text-sm underline" style={{ color: "var(--purple-ink)" }}>
-              {sleepoverOpen ? "Hide sleepover requests ▲" : "Tap to add sleepover requests ▼"}
-            </p>
-          </button>
-
-          {sleepoverOpen && (
-            <div className="animate-rise mt-3 rounded-2xl border-2 border-dashed p-4" style={{ borderColor: "var(--purple-ink)", backgroundColor: "oklch(0.85 0.08 290 / 0.15)" }}>
-              <label className="font-script text-xl" style={{ color: "var(--purple-ink)" }}>
-                Sleepover requests <span className="font-body text-xs opacity-70">(optional)</span>
-              </label>
-              <p className="font-body text-xs mb-2" style={{ color: "var(--muted-foreground)" }}>
-                e.g. pickup time, dietary needs, medications, comfort item…
-              </p>
-              <textarea
-                value={sleepoverNote}
-                onChange={(e) => setSleepoverNote(e.target.value)}
-                rows={3}
-                maxLength={500}
-                className="mt-1 w-full rounded-xl border-2 px-4 py-3 font-body outline-none transition focus:ring-2"
-                style={{ borderColor: "var(--blush)", backgroundColor: "white", color: "var(--ink)" }}
-                placeholder="Anything Eshaal's family should know?"
-              />
-            </div>
-          )}
-
-          <p className="mt-6 text-center font-script text-xl" style={{ color: "var(--muted-foreground)" }}>
-            RSVP direct or questions for <span style={{ color: "var(--purple-ink)" }} className="font-bold">Zubair</span> at{" "}
-            <a href="tel:2179792912" className="underline decoration-dotted" style={{ color: "var(--teal)" }}>217·979·2912</a>
-          </p>
+          </div>
         </div>
 
         {/* decor: sunglasses + beach ball */}
@@ -285,11 +244,29 @@ function Index() {
                             Staying for the sleepover! 🌙
                           </span>
                           <span className="block text-sm font-body" style={{ color: "var(--muted-foreground)" }}>
-                            Bring pjs, pillow &amp; a toothbrush — add requests in the Optional Sleepover section above
+                            Bring pjs, pillow &amp; a toothbrush
                           </span>
                         </span>
                       </label>
                     </div>
+
+                    {sleepoverOpen && (
+                      <div className="animate-rise rounded-2xl border-2 border-dashed p-4" style={{ borderColor: "var(--purple-ink)", backgroundColor: "oklch(0.85 0.08 290 / 0.15)" }}>
+                        <Label>Sleepover requests <span className="font-body text-xs opacity-70">(optional)</span></Label>
+                        <p className="font-body text-xs mb-2" style={{ color: "var(--muted-foreground)" }}>
+                          e.g. pickup time, dietary needs, medications, comfort item…
+                        </p>
+                        <textarea
+                          value={sleepoverNote}
+                          onChange={(e) => setSleepoverNote(e.target.value)}
+                          rows={3}
+                          maxLength={500}
+                          className="mt-1 w-full rounded-xl border-2 px-4 py-3 font-body outline-none transition focus:ring-2"
+                          style={{ borderColor: "var(--blush)", backgroundColor: "white", color: "var(--ink)" }}
+                          placeholder="Anything Eshaal's family should know?"
+                        />
+                      </div>
+                    )}
 
                     <Field
                       label="Allergies or things we should know"
@@ -323,12 +300,17 @@ function Index() {
                 >
                   {submitting ? "Sending..." : "Send RSVP"}
                 </button>
-
-                <p className="text-center font-script text-lg" style={{ color: "var(--teal)" }}>
-                  or <a href="tel:2179792912" className="underline font-bold inline-flex items-center gap-1"><Phone className="h-4 w-4" /> RSVP to Zubair — 217·979·2912</a>
-                </p>
               </form>
             )}
+          </div>
+
+          <div className="mt-6 brush-yellow inline-block w-full text-center">
+            <p className="font-script text-xl md:text-2xl" style={{ color: "var(--ink)" }}>
+              RSVP direct or questions for <span style={{ color: "var(--purple-ink)" }} className="font-bold">Zubair</span> at{" "}
+              <a href="tel:2179792912" className="font-bold underline decoration-2 underline-offset-4 hover:opacity-80 inline-flex items-center gap-1" style={{ color: "var(--hot-pink)" }}>
+                <Phone className="h-4 w-4" /> 217·979·2912
+              </a>
+            </p>
           </div>
 
           <p className="mt-8 text-center font-script text-2xl" style={{ color: "var(--teal)" }}>
