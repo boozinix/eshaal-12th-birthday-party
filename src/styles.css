@@ -40,10 +40,11 @@
   --color-sky: var(--sky);
   --color-ink: var(--ink);
 
-  --font-hero: "Sacramento", cursive;
-  --font-script: "Caveat", cursive;
-  --font-body: "Kalam", cursive;
-  --font-chunk: "Alfa Slab One", serif;
+  --font-hero: "Alex Brush", cursive;
+  --font-script: "Patrick Hand", cursive;
+  --font-body: "Patrick Hand", cursive;
+  --font-chunk: "Mrs Saint Delafield", cursive;
+  --font-brush: "Pacifico", cursive;
 }
 
 :root {
@@ -100,6 +101,7 @@
 @utility font-script { font-family: var(--font-script); }
 @utility font-body { font-family: var(--font-body); }
 @utility font-chunk { font-family: var(--font-chunk); }
+@utility font-brush { font-family: var(--font-brush); }
 
 /* Watercolor brush stroke behind text */
 @utility brush-pink {

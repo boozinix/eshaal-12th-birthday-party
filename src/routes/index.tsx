@@ -25,7 +25,8 @@ function Index() {
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState<null | "yes" | "no">(null);
   const [attending, setAttending] = useState<"yes" | "no">("yes");
-  const [sleepover, setSleepover] = useState(false);
+  const [sleepoverOpen, setSleepoverOpen] = useState(false);
+  const [sleepoverNote, setSleepoverNote] = useState("");
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -35,8 +36,8 @@ function Index() {
       parent_phone: fd.get("parent_phone") as string,
       child_name: fd.get("child_name") as string,
       attending,
-      sleepover,
-      sleepover_requests: (fd.get("sleepover_requests") as string) || undefined,
+      sleepover: sleepoverOpen,
+      sleepover_requests: sleepoverNote.trim() || undefined,
       allergies: (fd.get("allergies") as string) || undefined,
       message: (fd.get("message") as string) || undefined,
     };
@@ -102,10 +103,10 @@ function Index() {
           </h1>
 
           <div className="mt-4 inline-block brush-pink">
-            <span className="font-chunk text-4xl md:text-6xl italic mr-2" style={{ color: "var(--purple-ink)" }}>
+            <span className="font-chunk text-4xl md:text-6xl mr-2" style={{ color: "var(--purple-ink)" }}>
               12<sup className="text-xl md:text-2xl">th</sup>
             </span>
-            <span className="font-script text-3xl md:text-5xl" style={{ color: "var(--ink)" }}>
+            <span className="font-chunk text-4xl md:text-6xl" style={{ color: "var(--ink)" }}>
               Birthday Party!
             </span>
           </div>
@@ -113,14 +114,14 @@ function Index() {
           <div className="relative mt-6 md:mt-8">
             <div className="flex items-center justify-center gap-2 flex-wrap">
               <Splash />
-              <span className="font-script italic text-5xl md:text-7xl" style={{ color: "var(--teal)" }}>
+              <span className="font-hero text-6xl md:text-8xl" style={{ color: "var(--teal)" }}>
                 Pool Party
               </span>
               <Splash reverse />
             </div>
             <div className="mt-1">
               <span className="font-script text-3xl md:text-4xl" style={{ color: "var(--ink)" }}>&amp;</span>
-              <span className="ml-2 font-script italic text-5xl md:text-7xl" style={{ color: "var(--orange-crush)" }}>
+              <span className="ml-2 font-brush text-4xl md:text-6xl" style={{ color: "var(--orange-crush)" }}>
                 Barbecue
               </span>
               <Heart className="inline-block ml-2 h-5 w-5 animate-heart-pop" style={{ color: "var(--hot-pink)", fill: "var(--hot-pink)" }} />
@@ -163,21 +164,50 @@ function Index() {
               Please RSVP to <a href="tel:2179792912" className="font-bold underline decoration-2 underline-offset-4 hover:opacity-80" style={{ color: "var(--hot-pink)" }}>217·979·2912</a>
             </p>
           </div>
-          <p className="mt-3 text-center font-script text-xl" style={{ color: "var(--muted-foreground)" }}>
-            Questions? Call or text <span style={{ color: "var(--purple-ink)" }} className="font-bold">Zubair</span> at{" "}
-            <a href="tel:2179792912" className="underline decoration-dotted" style={{ color: "var(--teal)" }}>217·979·2912</a>
-          </p>
         </div>
 
         <div className="mx-auto mt-8 max-w-2xl px-6">
-          <div className="brush-lavender inline-block w-full text-center">
+          <button
+            type="button"
+            onClick={() => setSleepoverOpen((o) => !o)}
+            aria-expanded={sleepoverOpen}
+            className="brush-lavender block w-full text-center cursor-pointer"
+          >
             <p className="font-script text-2xl md:text-3xl" style={{ color: "var(--purple-ink)" }}>
               Optional Sleepover <Heart className="inline h-5 w-5" style={{ color: "var(--hot-pink)", fill: "var(--hot-pink)" }} />
             </p>
             <p className="font-script text-xl md:text-2xl" style={{ color: "var(--ink)" }}>
               for the girls who want to stay behind! <Heart className="inline h-4 w-4" style={{ color: "var(--purple-ink)", fill: "var(--purple-ink)" }} />
             </p>
-          </div>
+            <p className="mt-1 font-body text-sm underline" style={{ color: "var(--purple-ink)" }}>
+              {sleepoverOpen ? "Hide sleepover requests ▲" : "Tap to add sleepover requests ▼"}
+            </p>
+          </button>
+
+          {sleepoverOpen && (
+            <div className="animate-rise mt-3 rounded-2xl border-2 border-dashed p-4" style={{ borderColor: "var(--purple-ink)", backgroundColor: "oklch(0.85 0.08 290 / 0.15)" }}>
+              <label className="font-script text-xl" style={{ color: "var(--purple-ink)" }}>
+                Sleepover requests <span className="font-body text-xs opacity-70">(optional)</span>
+              </label>
+              <p className="font-body text-xs mb-2" style={{ color: "var(--muted-foreground)" }}>
+                e.g. pickup time, dietary needs, medications, comfort item…
+              </p>
+              <textarea
+                value={sleepoverNote}
+                onChange={(e) => setSleepoverNote(e.target.value)}
+                rows={3}
+                maxLength={500}
+                className="mt-1 w-full rounded-xl border-2 px-4 py-3 font-body outline-none transition focus:ring-2"
+                style={{ borderColor: "var(--blush)", backgroundColor: "white", color: "var(--ink)" }}
+                placeholder="Anything Eshaal's family should know?"
+              />
+            </div>
+          )}
+
+          <p className="mt-6 text-center font-script text-xl" style={{ color: "var(--muted-foreground)" }}>
+            RSVP direct or questions for <span style={{ color: "var(--purple-ink)" }} className="font-bold">Zubair</span> at{" "}
+            <a href="tel:2179792912" className="underline decoration-dotted" style={{ color: "var(--teal)" }}>217·979·2912</a>
+          </p>
         </div>
 
         {/* decor: sunglasses + beach ball */}
@@ -245,8 +275,8 @@ function Index() {
                       <label className="flex cursor-pointer items-center gap-3">
                         <input
                           type="checkbox"
-                          checked={sleepover}
-                          onChange={(e) => setSleepover(e.target.checked)}
+                          checked={sleepoverOpen}
+                          onChange={(e) => setSleepoverOpen(e.target.checked)}
                           className="h-5 w-5"
                           style={{ accentColor: "var(--hot-pink)" }}
                         />
@@ -255,28 +285,11 @@ function Index() {
                             Staying for the sleepover! 🌙
                           </span>
                           <span className="block text-sm font-body" style={{ color: "var(--muted-foreground)" }}>
-                            Bring pjs, pillow &amp; a toothbrush
+                            Bring pjs, pillow &amp; a toothbrush — add requests in the Optional Sleepover section above
                           </span>
                         </span>
                       </label>
                     </div>
-
-                    {sleepover && (
-                      <div className="animate-rise rounded-2xl border-2 border-dashed p-4" style={{ borderColor: "var(--purple-ink)", backgroundColor: "oklch(0.85 0.08 290 / 0.15)" }}>
-                        <Label>Sleepover requests <span className="font-body text-xs opacity-70">(optional)</span></Label>
-                        <p className="font-body text-xs mb-2" style={{ color: "var(--muted-foreground)" }}>
-                          e.g. pickup time, dietary needs, medications, comfort item…
-                        </p>
-                        <textarea
-                          name="sleepover_requests"
-                          rows={3}
-                          maxLength={500}
-                          className="mt-1 w-full rounded-xl border-2 px-4 py-3 font-body outline-none transition focus:ring-2"
-                          style={{ borderColor: "var(--blush)", backgroundColor: "white", color: "var(--ink)" }}
-                          placeholder="Anything Eshaal's family should know?"
-                        />
-                      </div>
-                    )}
 
                     <Field
                       label="Allergies or things we should know"
