@@ -13,6 +13,8 @@ export const Route = createFileRoute("/admin")({
   }),
 });
 
+const HOST_EMAIL = "zubair.nizami@yahoo.com";
+
 type Rsvp = {
   id: string;
   parent_name: string;
@@ -50,13 +52,9 @@ function Admin() {
       setRsvps([]);
       return;
     }
-    (async () => {
-      // Claim admin if this is the first user
-      const { data: claim } = await supabase.rpc("claim_admin_if_first");
-      const admin = Boolean(claim);
-      setIsAdmin(admin);
-      if (admin) await loadRsvps();
-    })();
+    const admin = session.email === HOST_EMAIL;
+    setIsAdmin(admin);
+    if (admin) loadRsvps();
   }, [session]);
 
   async function loadRsvps() {
@@ -93,7 +91,7 @@ function Admin() {
           You're signed in as {session.email}, but not the host.
         </p>
         <p className="font-body text-sm opacity-70 mb-4">
-          Only the first account to sign up here becomes the host.
+          Only {HOST_EMAIL} is the host.
         </p>
         <button
           onClick={signOut}
