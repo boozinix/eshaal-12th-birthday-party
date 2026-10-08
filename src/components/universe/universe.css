@@ -217,6 +217,43 @@
   margin-left: 6px;
 }
 
+.uv-bg-toggle {
+  position: absolute;
+  top: 118px;
+  right: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(159, 211, 255, 0.5);
+  background: rgba(159, 211, 255, 0.16);
+  color: #fff;
+  font-size: 12.5px;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  z-index: 5;
+  transition:
+    background 0.15s,
+    border-color 0.15s,
+    color 0.15s;
+}
+.uv-bg-toggle:hover {
+  background: rgba(159, 211, 255, 0.28);
+}
+.uv-bg-toggle.uv-bg-off {
+  border-color: rgba(255, 255, 255, 0.14);
+  background: rgba(6, 8, 20, 0.6);
+  color: #9aa6cf;
+}
+.uv-bg-icon {
+  font-size: 14px;
+  line-height: 1;
+  color: #cfd8ff;
+}
+.uv-bg-off .uv-bg-icon {
+  opacity: 0.35;
+}
 .uv-levels {
   position: absolute;
   left: 50%;
@@ -446,7 +483,7 @@
 .uv-card {
   position: absolute;
   right: 16px;
-  top: 96px;
+  top: 166px;
   width: 320px;
   max-width: calc(100vw - 32px);
   max-height: calc(100vh - 200px);
@@ -621,6 +658,12 @@
   .uv-hud-v em {
     display: block;
     margin: 0;
+  }
+  .uv-bg-toggle {
+    top: 112px;
+    right: 10px;
+    padding: 6px 10px;
+    font-size: 11px;
   }
   .uv-card {
     top: auto;

@@ -61,7 +61,15 @@ export default function UniverseExplorer() {
   const [layers, setLayers] = useState<Record<ObjectType, boolean>>(
     () => Object.fromEntries(TYPES.map((t) => [t, true])) as Record<ObjectType, boolean>,
   );
-  const [showWeb, setShowWeb] = useState(true);
+  const [showWeb, setShowWebState] = useState(() => {
+    try {
+      return window.localStorage.getItem("uv.background") !== "off";
+    } catch {
+      return true;
+    }
+  });
+  const showWebRef = useRef(showWeb);
+  showWebRef.current = showWeb;
   const [showRings, setShowRings] = useState(true);
   const [showLabels, setShowLabels] = useState(true);
   const [query, setQuery] = useState("");
@@ -84,6 +92,7 @@ export default function UniverseExplorer() {
         onInteract: () => setShowIntro(false),
       });
       sceneRef.current = scene;
+      scene.setShowWeb(showWebRef.current);
       setObjects(scene.objects);
       setReady(true);
     })();
@@ -100,12 +109,26 @@ export default function UniverseExplorer() {
         sceneRef.current?.select(null);
         setShowIntro(false);
       }
-      if (e.key.toLowerCase() === "h" && !(e.target as HTMLElement)?.closest("input"))
-        sceneRef.current?.flyToOrigin(55);
+      const typing = !!(e.target as HTMLElement)?.closest("input");
+      if (e.key.toLowerCase() === "h" && !typing) sceneRef.current?.flyToOrigin(55);
+      if (e.key.toLowerCase() === "b" && !typing) setBackgroundRef.current(!showWebRef.current);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
+
+  const setBackgroundRef = useRef<(on: boolean) => void>(() => {});
+  const setBackground = (on: boolean) => {
+    setShowWebState(on);
+    sceneRef.current?.setShowWeb(on);
+    try {
+      window.localStorage.setItem("uv.background", on ? "on" : "off");
+    } catch {
+      /* storage unavailable: the choice just doesn't persist */
+    }
+  };
+
+  setBackgroundRef.current = setBackground;
 
   const toggleLayer = (t: ObjectType) => {
     const v = !layers[t];
@@ -172,6 +195,19 @@ export default function UniverseExplorer() {
         </div>
       </div>
 
+      {/* Background stars toggle */}
+      <button
+        className={`uv-bg-toggle ${showWeb ? "" : "uv-bg-off"}`}
+        onClick={() => setBackground(!showWeb)}
+        title="Show or hide the simulated background galaxies (B)"
+        aria-pressed={showWeb}
+      >
+        <span className="uv-bg-icon" aria-hidden="true">
+          ✦
+        </span>
+        Background stars {showWeb ? "on" : "off"}
+      </button>
+
       {/* Zoom levels */}
       <div className="uv-levels">
         {LEVELS.map((l) => (
@@ -218,16 +254,9 @@ export default function UniverseExplorer() {
               </label>
             ))}
             <label className="uv-layer">
-              <input
-                type="checkbox"
-                checked={showWeb}
-                onChange={() => {
-                  setShowWeb(!showWeb);
-                  sceneRef.current?.setShowWeb(!showWeb);
-                }}
-              />
+              <input type="checkbox" checked={showWeb} onChange={() => setBackground(!showWeb)} />
               <span className="uv-dot" style={{ background: "#cfd8ff" }} />
-              <span>Cosmic web (background galaxies)</span>
+              <span>Background stars (simulated cosmic web)</span>
             </label>
             <label className="uv-layer">
               <input
@@ -392,6 +421,9 @@ export default function UniverseExplorer() {
         </span>
         <span>
           <kbd>H</kbd> home
+        </span>
+        <span>
+          <kbd>B</kbd> background stars
         </span>
       </div>
 
