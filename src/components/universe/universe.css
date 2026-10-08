@@ -27,20 +27,26 @@
   position: absolute;
   inset: 0;
 }
-.uv-canvas canvas {
-  display: block;
-  width: 100%;
-  height: 100%;
+.uv-canvas {
   touch-action: none;
   cursor: grab;
 }
-.uv-canvas canvas:active {
+.uv-canvas:active {
   cursor: grabbing;
+}
+.uv-canvas canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .uv-labels {
   position: absolute;
   inset: 0;
+  z-index: 1;
   pointer-events: none;
   overflow: hidden;
 }
@@ -683,4 +689,189 @@
     font-size: 11px;
     padding: 5px 9px;
   }
+}
+
+/* ───────── scale switcher ───────── */
+.uv-scales {
+  display: flex;
+  gap: 4px;
+  padding: 12px 14px 0;
+}
+.uv-scale {
+  flex: 1;
+  text-align: center;
+  padding: 6px 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #aab4d8;
+  font-size: 11.5px;
+  text-decoration: none;
+  transition:
+    background 0.15s,
+    color 0.15s;
+}
+.uv-scale:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+.uv-scale-active {
+  background: rgba(159, 211, 255, 0.18);
+  border-color: rgba(159, 211, 255, 0.5);
+  color: #fff;
+}
+
+/* ───────── time controls ───────── */
+.uv-time {
+  position: absolute;
+  right: 16px;
+  top: 166px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  z-index: 5;
+}
+.uv-time-btn,
+.uv-time-sel {
+  padding: 7px 11px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(6, 8, 20, 0.6);
+  color: #cfd6f2;
+  font-size: 12px;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+}
+.uv-time-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+.uv-time-on {
+  border-color: #9fd3ff;
+  color: #fff;
+  background: rgba(159, 211, 255, 0.2);
+}
+.uv-time-sel {
+  appearance: auto;
+}
+.uv-bg-toggle.uv-bg-lower {
+  top: 142px;
+}
+.uv-card.uv-card-lower {
+  top: 214px;
+}
+.uv-card-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.uv-btn-link {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  border-color: rgba(255, 210, 122, 0.5);
+  background: rgba(255, 210, 122, 0.14);
+}
+.uv-btn-link:hover {
+  background: rgba(255, 210, 122, 0.28);
+}
+.uv-fact {
+  display: contents;
+}
+
+/* ───────── Milky Way label styles ───────── */
+.uv-g-star .uv-label-name {
+  color: #fff4d6;
+}
+.uv-g-cluster .uv-label-name {
+  color: #ffe3a8;
+}
+.uv-g-nebula .uv-label-name {
+  color: #ffb3c8;
+}
+.uv-g-arm .uv-label-name {
+  color: #9fd3ff;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+.uv-g-structure .uv-label-name {
+  color: #dcb3ff;
+  font-style: italic;
+  letter-spacing: 0.03em;
+}
+.uv-g-satellite .uv-label-name {
+  color: #9cf8e8;
+  font-weight: 600;
+}
+.uv-g-landmark .uv-label-name {
+  color: #ffffff;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* ───────── Solar System label styles ───────── */
+.uv-s-star .uv-label-name {
+  color: #ffe680;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.uv-s-planet .uv-label-name {
+  color: #e6f2ff;
+  font-weight: 700;
+  font-size: 12.5px;
+}
+.uv-s-dwarf .uv-label-name {
+  color: #ffe3a8;
+}
+.uv-s-moon .uv-label-name {
+  color: #d9dde8;
+  font-size: 10.5px;
+}
+.uv-s-small .uv-label-name {
+  color: #ffc188;
+  font-size: 10.5px;
+}
+.uv-s-probe .uv-label-name {
+  color: #9cf8e8;
+}
+.uv-s-region .uv-label-name {
+  color: #dcb3ff;
+  font-style: italic;
+  letter-spacing: 0.04em;
+}
+.uv-s-landmark .uv-label-name {
+  color: #ffffff;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+@media (max-width: 760px) {
+  .uv-time {
+    top: auto;
+    bottom: 58px;
+    right: 10px;
+    left: 10px;
+    justify-content: center;
+  }
+  .uv-bg-toggle.uv-bg-lower {
+    top: 134px;
+  }
+  .uv-card.uv-card-lower {
+    top: auto;
+  }
+  .uv-levels {
+    bottom: 100px;
+  }
+}
+button.uv-scale,
+button.uv-btn-link {
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+}
+button.uv-scale.uv-scale-active {
+  background: rgba(159, 211, 255, 0.18);
 }

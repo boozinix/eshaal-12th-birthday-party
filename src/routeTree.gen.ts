@@ -10,12 +10,24 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UniverseRouteImport } from './routes/universe'
+import { Route as SolarSystemRouteImport } from './routes/solar-system'
+import { Route as GalaxyRouteImport } from './routes/galaxy'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 
 const UniverseRoute = UniverseRouteImport.update({
   id: '/universe',
   path: '/universe',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SolarSystemRoute = SolarSystemRouteImport.update({
+  id: '/solar-system',
+  path: '/solar-system',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GalaxyRoute = GalaxyRouteImport.update({
+  id: '/galaxy',
+  path: '/galaxy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminRoute = AdminRouteImport.update({
@@ -32,30 +44,38 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
+  '/galaxy': typeof GalaxyRoute
+  '/solar-system': typeof SolarSystemRoute
   '/universe': typeof UniverseRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
+  '/galaxy': typeof GalaxyRoute
+  '/solar-system': typeof SolarSystemRoute
   '/universe': typeof UniverseRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
+  '/galaxy': typeof GalaxyRoute
+  '/solar-system': typeof SolarSystemRoute
   '/universe': typeof UniverseRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/admin' | '/universe'
+  fullPaths: '/' | '/admin' | '/galaxy' | '/solar-system' | '/universe'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/admin' | '/universe'
-  id: '__root__' | '/' | '/admin' | '/universe'
+  to: '/' | '/admin' | '/galaxy' | '/solar-system' | '/universe'
+  id: '__root__' | '/' | '/admin' | '/galaxy' | '/solar-system' | '/universe'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRoute
+  GalaxyRoute: typeof GalaxyRoute
+  SolarSystemRoute: typeof SolarSystemRoute
   UniverseRoute: typeof UniverseRoute
 }
 
@@ -66,6 +86,20 @@ declare module '@tanstack/react-router' {
       path: '/universe'
       fullPath: '/universe'
       preLoaderRoute: typeof UniverseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/solar-system': {
+      id: '/solar-system'
+      path: '/solar-system'
+      fullPath: '/solar-system'
+      preLoaderRoute: typeof SolarSystemRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/galaxy': {
+      id: '/galaxy'
+      path: '/galaxy'
+      fullPath: '/galaxy'
+      preLoaderRoute: typeof GalaxyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin': {
@@ -88,6 +122,8 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
+  GalaxyRoute: GalaxyRoute,
+  SolarSystemRoute: SolarSystemRoute,
   UniverseRoute: UniverseRoute,
 }
 export const routeTree = rootRouteImport
